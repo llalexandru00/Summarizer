@@ -55,10 +55,14 @@
             <li><b>Context</b> Summarizer is represented by a single context - the Summarizer system. This makes sense while this web application is
                 currently independent from any other existing systems like external API's or cloud services. However, this doesn't mean it is not open
                 for extension; the current implementation will focus more on the internal backbone.</li>
-            <li><b>Container </b> The atchitecure is built around 3 containers mainly evoking the separation concept principle. The One-Page application
+            <li><b>Container </b> The architecure is built around 3 containers mainly evoking the separation concept principle. The One-Page application
                 is the physical interpretation of the front-end, delivering to the user a way of inputing the parameters and the data itself. Also this 
-                directly provides the user a dashboard to customize the decisions of the AI (giving feedback).  </li>
-            <li><b>Component </b> The components represent how the use-cases are modeled. Starting front the front-end side, there are 3 main stages which
+                directly provides the user a dashboard to customize the decisions of the AI (giving feedback). Another container is represented by the 
+                Web server which will serve as a gateway towards the backend. It will dispatch jobs to the API and afterward responding to the HTTP requests.
+                Finally, the API will be the one carrying the heavy algorithms. It will be detached from the rest of the application so that it will work as
+                an internal script.
+            </li>
+            <li><b>Component </b> The components represent how the use-cases are modeled. Starting from the front-end side, there are 3 main stages which
                 the user should pursue. Firstly it should plug in the data and eventually cusomize the parameters. If it opts for an advanced summary, it
                 will be led to the 2nd stage, the dashboard. Here he can customize the AI and tinker the result such that it gives feedback to the summarizer.
                 In the end, the user will get his summary. In the background, the API will be called withing the parameters provided to obtain a response.
@@ -80,12 +84,12 @@
         <h5 id="be_1_1"> 4.1.1 Sentence trimming </h5>
         <p> The sentence trimming will deal with finding an euristic which will define how relevant one sentence is. Separating the concepts into sentances
             we ensure that removing one will not trigger semantic loss. However, the naive trimming can change the semantic, mainly if several sentances are
-            semantically related. All in all, the score given to each sentance will be given according to some parameters: the words it contains, the length of it,
-            the link to the neightbor sentances etc. Depending on this score, the sentances may be even merged to ensure than it will make sence afterwards as well.
+            related. All in all, the score given to each sentance will be according to some parameters: the words it contains, the length of it,
+            the link to the neightbor sentances etc. Depending on this score, the sentances may be even merged to ensure than it will make sense afterwards as well.
         </p>
         <h5 id="be_1_2"> 4.1.2 Abbreviation and synonyms </h5>
-        <p> Another way of safe summarizing is to replace long words with shorter one without losing meaning. The safest approach is to stuff in abbreviations (ex:
-            Articial Inteligence will be summarized in A.I.). The synonum approach is still not 100% safe, as it can replace words which are part of one expression,
+        <p> Another way of safe summarizing is to replace long words with shorter ones without losing meaning. The safest approach is to stuff in abbreviations (ex:
+            Articial Inteligence will be summarized in A.I.). The synonym approach is still not 100% safe, as it can replace words which are part of expressions,
             thus it should keep the same syntax. As a naive approach this will be ignored, but further on, a score will be given to such replacements, thus synonyms
             which are riskier will be used in extreme cases (high compression level).
         </p>
@@ -96,7 +100,7 @@
         </p>
         <h3 id="be_1_4"> 4.2 Feedback </h3>
         <p> The user is allowed to provide a feedback, which will be interpreted as scores, which will trigger another summarize, depending on the new parameters.
-            This will help in cases in which the user tells that some sentances are crucial, thus the words in it may prove important, thus the API might reconsider
+            This will help in cases in which the user tells that some sentances are crucial, thus the words in it may prove important and the API might reconsider
             trimming sentances with these words. Also, the merging or abbreviations can be silenced by the user, meaning that there is a lost of semantic in those: which
             should trigger score recalculation.
         </p>
