@@ -1,0 +1,112 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="html-report.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,700" rel="stylesheet">
+    <title>Summarizer</title>
+</head>
+
+<body>
+
+    <h1> Summarizer </h1>
+    
+     <div id="toc_container">
+        <ul class="toc_list">
+            <li><a href="#introduction">1. Introduction</a></li>
+            <li><a href="#arhitecture">2. Project architecture</a>
+                <ul>
+                    <li><a href="#arhitecture_1">2.1 C4 Model Diagrams</a></li>
+                    <ul>
+                        <li><a href="#arhitecture_1_1">2.1.1 Context </a></li>
+                        <li><a href="#arhitecture_1_2">2.1.2 Container</a></li>
+                        <li><a href="#arhitecture_1_3">2.1.3 Component</a></li>
+                    </ul>
+                </ul>
+            </li>
+            <li><a href="#be">3. Implementation </a>
+                <ul>
+                    <li><a href="#be_1">3.1 Algorithm </a></li>
+                    <ul>
+                        <li><a href="#be_1_1">3.1.1 Sentence trimming </a></li>
+                        <li><a href="#be_1_2">3.1.2 Abbreviation and synonyms </a></li>
+                        <li><a href="#be_1_3">3.1.3 Word merging </a></li>
+                    </ul>
+                    <li><a href="#be_2">3.2 Feedback response </a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <section id="introduction">
+        <h1> 1. Introduction </h1>
+        <p> 
+            <b>Summarizer</b> is a tool used for summerizing texts somewhere around 10%-50% of the initial content.  Specific euristics and plain algorithms
+            are used for identifying relevant content which should definatley appear in the summary. In other words, words/sentences/paragraphs which do not
+            bring value to the semantic will be removed in order to shorten the text. The user is also playing a role in feedbacking the algorithm for better
+            performance.
+        </p>
+    </section>
+    
+    <section id="architecture">
+        <h1> 2. Project architecture </h1>
+        <p> The arhitecure will be modeled in a C4 model. Even if the context is not very strong, the containers and the components are worth mentioning in a such fashion.  </p>
+        <ul>
+            <li><b>Context</b> Summarizer is represented by a single context - the Summarizer system. This makes sense while this web application is
+                currently independent from any other existing systems like external API's or cloud services. However, this doesn't mean it is not open
+                for extension; the current implementation will focus more on the internal backbone.</li>
+            <li><b>Container </b> The atchitecure is built around 3 containers mainly evoking the separation concept principle. The One-Page application
+                is the physical interpretation of the front-end, delivering to the user a way of inputing the parameters and the data itself. Also this 
+                directly provides the user a dashboard to customize the decisions of the AI (giving feedback).  </li>
+            <li><b>Component </b> The components represent how the use-cases are modeled. Starting front the front-end side, there are 3 main stages which
+                the user should pursue. Firstly it should plug in the data and eventually cusomize the parameters. If it opts for an advanced summary, it
+                will be led to the 2nd stage, the dashboard. Here he can customize the AI and tinker the result such that it gives feedback to the summarizer.
+                In the end, the user will get his summary. In the background, the API will be called withing the parameters provided to obtain a response.
+            </li>
+            <li><b>Code</b> No code scheme is yet figured. As a regular application, this is not appropriate for a summary of the architecture.</li>
+        </ul>
+        <h3 id="arhitecture_1"> 2.1 C4 Model Diagrams </h3>
+        <h3 id="arhitecture_1_1"> Context </h3>
+        <img src="./images/c1.png" alt="Context diagram">
+        <h3 id="arhitecture_1_2"> Container </h3>
+        <img src="./images/c2.png" alt="Container diagram">
+        <h3 id="arhitecture_1_3"> Component </h3>
+        <img src="./images/c3.png" alt="Component diagram">
+    </section>
+
+    <section id="be">
+        <h1> 4. Implementation</h1>
+        <h3 id="be_1"> 4.1 Algorithm </h3>
+        <h5 id="be_1_1"> 4.1.1 Sentence trimming </h5>
+        <p> The sentence trimming will deal with finding an euristic which will define how relevant one sentence is. Separating the concepts into sentances
+            we ensure that removing one will not trigger semantic loss. However, the naive trimming can change the semantic, mainly if several sentances are
+            semantically related. All in all, the score given to each sentance will be given according to some parameters: the words it contains, the length of it,
+            the link to the neightbor sentances etc. Depending on this score, the sentances may be even merged to ensure than it will make sence afterwards as well.
+        </p>
+        <h5 id="be_1_2"> 4.1.2 Abbreviation and synonyms </h5>
+        <p> Another way of safe summarizing is to replace long words with shorter one without losing meaning. The safest approach is to stuff in abbreviations (ex:
+            Articial Inteligence will be summarized in A.I.). The synonum approach is still not 100% safe, as it can replace words which are part of one expression,
+            thus it should keep the same syntax. As a naive approach this will be ignored, but further on, a score will be given to such replacements, thus synonyms
+            which are riskier will be used in extreme cases (high compression level).
+        </p>
+        <h5 id="be_1_3"> 4.1.3 Word merging </h5>
+        <p> For the sake of content lenght, some words can be merged in order to obtain a compressed version. This will be mainly handled in cases, such that it won't
+            risk the lose of semantic. Thus there will be certain pre-defined scenarios in which the compression will be done. Also, based on the risk of applying such 
+            rule, these replacements will be evaluated to a score (as before). An example is negating words: "not good" should be replaced with "bad".
+        </p>
+        <h3 id="be_1_4"> 4.2 Feedback </h3>
+        <p> The user is allowed to provide a feedback, which will be interpreted as scores, which will trigger another summarize, depending on the new parameters.
+            This will help in cases in which the user tells that some sentances are crucial, thus the words in it may prove important, thus the API might reconsider
+            trimming sentances with these words. Also, the merging or abbreviations can be silenced by the user, meaning that there is a lost of semantic in those: which
+            should trigger score recalculation.
+        </p>
+    </section>
+    
+    <footer>
+        <p> <b> Summarizer </b> </p>
+        <p> Lungu Alexandru </p>
+    </footer>
+
+</body>
+
+</html>
