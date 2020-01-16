@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="../styles/index.css">
+    </head>
+    <body>
+        
+        <main>
+            <h1>Summarizer</h1>
+            <h2>
+                Edit the sentences or remove them from the summarizer. They were already processed, thus no further 
+                modifications will be automatically made after submitting.
+            </h2>
+            <form action="final" method="POST">
+            {{#sentences}}
+                <input class="sentence" type="text" value="{{content}}" name={{ord}} id={{ord}}><button type="button" class="cancel" name={{ord}}>X</button><br>
+            {{/sentences}}
+            <br>
+            <input name = "submit" class = "submits" type = "submit" value = "Submit"/>
+            </form>
+        </main>
+
+        <script type="text/javascript" src="../js/index.js"></script>
+    </body>
+</html>

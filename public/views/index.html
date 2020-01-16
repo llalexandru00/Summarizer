@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="../styles/index.css">
+
+    </head>
+    <body>
+        
+        <main>
+            <h1>Summarizer</h1>
+            <h2>
+                Insert here the text which is going to be summarized. Make sure it fits the linguistic standards: end propositions with
+                dot and space, let at least one space before the start of one word etc. Afterwards, choosing the quick submit will result in
+                loading a page with the final result, which can't be anymore altered. On the other hand, choosing the submit option will
+                load a configuration page, in order to feedback the result, thus altering the process. Finally, you can choose the ratio at
+                which the text will be summarized (99 will mean no summarization). {{name}}
+            </h2>
+            <form action="submit" method="POST">
+            <textarea name = "text" rows=20></textarea><br><br>
+            <input name = "ratio" type = "number" min="0" max = "99" value = "50"/>
+            <input name = "submit" class = "submits" type = "submit" value = "Submit"/>
+            <input name = "submit" class = "submits" type = "submit" value = "Quick Submit"/>
+
+            </form>
+        </main>
+
+    </body>
+</html>
